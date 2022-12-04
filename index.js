@@ -19,6 +19,7 @@ const client = new Client({
 });
 
 client.antinuke = {};
+client.antispam = {};
 client.cooldowns = new Discord.Collection();
 client.COOLDOWN_SECONDS = 50;
 // client.antinuke = new Discord.Collection();
