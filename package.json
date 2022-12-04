@@ -1,0 +1,29 @@
+{
+  "name": "discord_bot_js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^1.1.0",
+    "@discordjs/rest": "^1.0.1",
+    "axios": "^0.27.2",
+    "canvacord": "^5.4.5",
+    "crypto-js": "^4.1.1",
+    "discord-anti-spam": "^2.7.3",
+    "discord-api-types": "^0.37.2",
+    "discord-button-pages": "^1.1.9",
+    "discord-xp": "^1.1.16",
+    "discord.js": "^13.10.2",
+    "discord.js-pagination": "^1.0.3",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.4",
+    "mongoose": "^6.5.2",
+    "reconlx": "^2.5.6",
+    "sqlite3": "^5.0.11"
+  }
+}
