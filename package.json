@@ -13,6 +13,7 @@
     "@discordjs/rest": "^1.0.1",
     "axios": "^0.27.2",
     "canvacord": "^5.4.5",
+    "chalk": "^5.1.2",
     "crypto-js": "^4.1.1",
     "discord-anti-spam": "^2.7.3",
     "discord-api-types": "^0.37.2",
