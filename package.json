@@ -1,7 +1,7 @@
 {
   "name": "discord_bot_js",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.1.0",
+  "description": "A Bot",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +21,7 @@
     "discord-xp": "^1.1.16",
     "discord.js": "^13.10.2",
     "discord.js-pagination": "^1.0.3",
+    "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",
     "moment": "^2.29.4",
     "mongoose": "^6.5.2",

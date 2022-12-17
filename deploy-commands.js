@@ -1,15 +1,34 @@
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v10');
-const { token, clientId } = require('./Data/data.json');
-const fs = require('node:fs');
+require('dotenv').config()
+const { REST } = require('@discordjs/rest')
+const { Routes } = require('discord-api-types/v10')
+const { clientId } = require('./Config/config.json')
+const token = process.env.TOKEN
+const fs = require('node:fs')
+const path = require('node:path')
+
+function ReadFiles(Path) {
+	if (!fs.existsSync(Path)) return []
+  
+	let AllFiles = []
+	const Files = fs.readdirSync(Path)
+	for (const file of Files) {
+		const filePath = path.join(Path, file)
+		const fileStat = fs.lstatSync(filePath)
+		if (fileStat.isDirectory()) {
+			AllFiles = AllFiles.concat(ReadFiles(path.join(Path, file)))
+		}
+		if (filePath.endsWith('.js')) {
+			AllFiles.push(filePath)
+		}
+	}
+	return AllFiles
+}
 
 const commands = [];
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandPath = path.join(__dirname, 'commands');
 
-// Place your client and guild ids here
-
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
+for (const file of ReadFiles(commandPath)) {
+	const command = require(file);
 	commands.push(command.data.toJSON());
 }
 
