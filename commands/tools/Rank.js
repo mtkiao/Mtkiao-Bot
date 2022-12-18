@@ -39,7 +39,8 @@ module.exports = {
                 interaction.reply({ embeds: [embed] });
             }
             else{
-                res = await Find_data_level(`${interaction.guildId}.${interaction.user.id}`, "level_2")
+                console.log(member)
+                res = await Find_data_level(`${interaction.guildId}.${member.id}`, "level_2")
 
                 if (!res) {
                     const embed = new MessageEmbed()

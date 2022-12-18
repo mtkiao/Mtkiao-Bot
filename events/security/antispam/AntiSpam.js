@@ -17,7 +17,7 @@ module.exports = {
             if (!SpamUser[message.guildId]) { SpamUser[message.guildId] = {}; }
             if (!SpamUser[message.guildId][UserId]) { SpamUser[message.guildId][UserId] = {time : 1, second: Math.round(new Date().getTime()/1000) }; }
             else SpamUser[message.guildId][UserId]["time"] += 1;
-            console.log(SpamUser[message.guildId][UserId]["time"])
+
             if (SpamUser[message.guildId][UserId]["time"] >= res.spamtime && Math.round(new Date().getTime()/1000) - SpamUser[message.guildId][UserId]["second"] <= res.time) {
                 console.log(`Spam違規用戶: ${message.author.tag} ${message.guildId}`);
                 const memberTarger = message.guild.members.cache.get(message.author.id);
@@ -31,7 +31,7 @@ module.exports = {
                 message.channel.send({ embeds: [embed] });
 
             }
-            else if (Math.round(new Date().getTime()/1000) -SpamUser[message.guildId][UserId]["second"] >= res.time) delete SpamUser[message.guildId][UserId]
+            else if (Math.round(new Date().getTime()/1000) - SpamUser[message.guildId][UserId]["second"] >= res.time) delete SpamUser[message.guildId][UserId]
         } catch (e){}
     }
 }

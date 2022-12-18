@@ -17,30 +17,41 @@ module.exports = {
             if (quantity > 500) return await interaction.reply({ content: `:x:數量上限為500!`, ephemeral: true });
             if (quantity < 1) return await interaction.reply({ content: `:x:數量至少為1!`, ephemeral: true });
 
-            const messages = await interaction.channel.messages.fetch({
-                limit: quantity,
-            })
+            let SuccessMessages = 0
+            let TempQuantity = quantity
+            for (let i = 0; i < Math.ceil(quantity / 100); i++) {
+                if (TempQuantity <= 0) break
+                let MessageLimit = TempQuantity > 100 ? 100 : TempQuantity
 
-            await interaction.channel.bulkDelete(messages)
+                const messages = await interaction.channel.messages.fetch({
+                    limit: MessageLimit,
+                })
+
+                try{ 
+                    await interaction.channel.bulkDelete(messages)
+                } catch (e) {}
+
+                TempQuantity -= MessageLimit
+                SuccessMessages += messages.size
+            }
             
             const embed = new MessageEmbed()
                 .setColor(color=0xE693CB)
                 .setTitle(`訊息已刪除`)
-                .setDescription(`已成功清除 **${messages.size}** 個訊息`)
+                .setDescription(`已成功清除 **${SuccessMessages}** 個訊息`)
                 .addFields(
                     { name: '詳細資訊:', value: [
                         `命令使用者: ${interaction.user}`,
-                        `是否已成功清除所有訊息: ${quantity == messages.size ? ':white_check_mark:' : ':x:'}`,
-                        `清除訊息數量: ${messages.size}`,
-                        `清除失敗數量: ${quantity - messages.size}`,
+                        `是否已成功清除所有訊息: ${quantity == SuccessMessages ? ':white_check_mark:' : ':x:'}`,
+                        `清除訊息數量: ${SuccessMessages}`,
+                        `清除失敗數量: ${quantity - SuccessMessages}`,
                     ].join('\n') },
                 )
                 .setFooter({ text: `${client.user.tag} (/purge)`, iconURL: client.user.displayAvatarURL() })
                 .setTimestamp()
-            await interaction.reply({ embeds: [embed] });
-            console.log(interaction.user.tag, messages.size)
+            await interaction.reply({ embeds: [embed] })
         } catch (e){
-            await interaction.reply({ content: `:x:發生錯誤! 原因:${e}`, ephemeral: true });
+            await interaction.reply({ content: `:x:發生錯誤! 原因:${e}`, ephemeral: true })
         }
 	},
 };
