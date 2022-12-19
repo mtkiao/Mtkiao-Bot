@@ -1,17 +1,10 @@
 require('dotenv').config()
-const axios = require('axios')
-const fs = require('node:fs')
-const path = require('node:path')
-const Discord = require("discord.js")
 const { Client, Collection, Intents } = require('discord.js')
+const Discord = require("discord.js")
+const path = require('node:path')
+const fs = require('node:fs')
+const winston = require('winston')
 const token = process.env.TOKEN
-
-axios.get('https://discord.com/', {
-  }).then((response) => {
-    console.log(`Successfully connected to Discord API ${response.status}`)
-  }).catch((request) => {
-    console.log(`Failed connect to Discord API ${request}`)
-  })
 
 const client = new Client({
   intents: [
@@ -39,6 +32,14 @@ client.ReadFiles = function(Path) {
     }
     return AllFiles
 }
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.simple(),
+  transports: [
+    new winston.transports.File({ filename: './logs/error.log', level: 'error' }),
+    new winston.transports.Console()
+  ],
+})
 
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
@@ -99,8 +100,9 @@ client.on('interactionCreate', async interaction => {
 
   try {
     await command.execute(interaction, client);
+    logger.info(`[ ${new Date().toLocaleString()} ]: ${interaction.user.tag} > /${interaction.commandName}`);
   } catch (error) {
-    console.error(error);
+    logger.error(`[ ${new Date().toLocaleString()} ]: ${interaction.user.tag} > /${interaction.commandName} (ERROR): ${error}`);
   }
 });
 
