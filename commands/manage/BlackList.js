@@ -91,6 +91,7 @@ module.exports = {
                     blacklist_user = Guild.toString()
                     blacklist_user = JSON.parse(blacklist_user)
                     blacklist_user = blacklist_user[interaction.guildId]
+                    if (!blacklist_user) blacklist_user = []
                     resolve(blacklist_user)
                 })
             })
@@ -119,6 +120,7 @@ module.exports = {
             
             const canFitOnOnePage = blacklist_user.length <= 5
 
+            if (!interaction.channel.permissionsFor(interaction.guild.me).has(Permissions.FLAGS.SEND_MESSAGES | Permissions.FLAGS.VIEW_CHANNEL)) return await interaction.reply({ content: ":x:我沒有在此頻道發送訊息的權限!", ephemeral: true });
             await interaction.reply('Done')
 
             const embedMessage = await channel.send({

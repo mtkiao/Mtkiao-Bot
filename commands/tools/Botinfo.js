@@ -12,7 +12,7 @@ module.exports = {
   async execute(interaction, client) {
     try {
       await interaction.deferReply()
-      const commandsCount = client.ReadFiles(path.join(__dirname, '.')).length
+      const commandsCount = client.ReadFiles(path.join(__dirname, '../')).length
       const cpu = os.cpus()
 
       const embed = new MessageEmbed()

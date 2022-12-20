@@ -56,7 +56,7 @@ module.exports = {
                 var insertQuery = db.prepare("INSERT INTO joinrole VALUES (?,?)");
                 insertQuery.run(interaction.guildId, Role.id);
                 insertQuery.finalize();
-                interaction.reply({ embeds: [embed] })
+                await interaction.reply({ embeds: [embed] })
             }
             else {
                 const embed = new MessageEmbed()
@@ -73,7 +73,7 @@ module.exports = {
                     )
                     .setFooter({ text: `${client.user.tag} (/auto_role)`, iconURL: client.user.displayAvatarURL() })
                     .setTimestamp()
-                interaction.reply({ embeds: [embed] });
+                await interaction.reply({ embeds: [embed] });
             }
         }
         if (interaction.options.getSubcommand() === "disable") {
@@ -94,7 +94,7 @@ module.exports = {
                 db.run("DELETE FROM joinrole WHERE guild_id=?", interaction.guildId, err =>{
                     if(err) return console.log(err.message);
                 });
-                interaction.reply({ embeds: [embed] });
+                await interaction.reply({ embeds: [embed] });
             }
             else {
                 const embed = new MessageEmbed()
@@ -110,7 +110,7 @@ module.exports = {
                     )
                     .setFooter({ text: `${client.user.tag} (/auto_role)`, iconURL: client.user.displayAvatarURL() })
                     .setTimestamp()
-                interaction.reply({ embeds: [embed] });
+                await interaction.reply({ embeds: [embed] });
             }
         }
         if (interaction.options.getSubcommand() === "view") {
@@ -128,7 +128,7 @@ module.exports = {
                 )
                 .setFooter({ text: `${client.user.tag} (/auto_role)`, iconURL: client.user.displayAvatarURL() })
                 .setTimestamp()
-                interaction.reply({ embeds: [embed] })
+                await interaction.reply({ embeds: [embed] })
             }
             else {
                 const embed = new MessageEmbed()
@@ -144,7 +144,7 @@ module.exports = {
                 )
                 .setFooter({ text: `${client.user.tag} (/auto_role)`, iconURL: client.user.displayAvatarURL() })
                 .setTimestamp()
-                interaction.reply({ embeds: [embed] });
+                await interaction.reply({ embeds: [embed] });
             }
         }
 	},
