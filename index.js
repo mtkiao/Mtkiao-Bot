@@ -4,6 +4,7 @@ const Discord = require("discord.js")
 const path = require('node:path')
 const fs = require('node:fs')
 const winston = require('winston')
+const { printf } = winston.format;
 const token = process.env.TOKEN
 
 const client = new Client({
@@ -16,27 +17,33 @@ client.antinuke = {};
 client.antispam = {};
 client.cooldowns = new Discord.Collection();
 client.ReadFiles = function(Path) {
-    if (!fs.existsSync(Path)) return []
-  
-    let AllFiles = []
-    const Files = fs.readdirSync(Path)
-    for (const file of Files) {
-        const filePath = path.join(Path, file)
-        const fileStat = fs.lstatSync(filePath)
-        if (fileStat.isDirectory()) {
-            AllFiles = AllFiles.concat(this.ReadFiles(filePath))
-        }
-        if (filePath.endsWith('.js')) {
-            AllFiles.push(filePath)
-        }
+  if (!fs.existsSync(Path)) return []
+
+  let AllFiles = []
+  const Files = fs.readdirSync(Path)
+  for (const file of Files) {
+    const filePath = path.join(Path, file)
+    const fileStat = fs.lstatSync(filePath)
+    if (fileStat.isDirectory()) {
+      AllFiles = AllFiles.concat(this.ReadFiles(filePath))
     }
-    return AllFiles
+    if (filePath.endsWith('.js')) {
+      AllFiles.push(filePath)
+    }
+  }
+  return AllFiles
 }
+
+const LogFormat = printf(({ level, message, label, timestamp }) => {
+  return `${message}`;
+});
+
 const logger = winston.createLogger({
   level: 'info',
-  format: winston.format.simple(),
+  format: LogFormat,
   transports: [
     new winston.transports.File({ filename: './logs/error.log', level: 'error' }),
+    new winston.transports.File({ filename: './logs/info.log', level: 'info' }),
     new winston.transports.Console()
   ],
 })
@@ -50,10 +57,9 @@ for (const filePath of client.ReadFiles(commandsPath)) {
   try {
     const command = require(filePath);
     client.commands.set(command.data.name, command);
-    console.log('\033[40;32m Successfully loaded command \033[42;32m' + command.data.name + '\033[0m')
+    logger.error("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load command \033[42;32m' + command.data.name + '\033[0m');
   } catch (e) {
-    console.log('\033[40;31m Failed to load command \033[41;31m' + filePath + '\033[0m')
-    console.log(e)
+    logger.error("\033[40;31m" + `[ ${new Date().toLocaleString()} ]: ` + 'Failed to load command \033[41;31m' + filePath + '\033[0m' + `\n(ERROR) : ${e})`);
   }
 }
 
@@ -62,17 +68,20 @@ const commands = []
 for (const filePath of client.ReadFiles(evebtsPath)) {
   const event = require(filePath);
   if (event.once) {
-    client.once(event.name, (...args) => event.execute(client, ...args, commands))
+    client.once(event.name, (...args) => event.execute(client, ...args, commands));
+    logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load event \033[42;32m' + event.name + '\033[0m');
+  }
+  else if (!event.once && event.name != undefined) {
+    client.on(event.name, (...args) => event.execute(client, ...args, commands));
+    logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load event \033[42;32m' + event.name + '\033[0m');
   }
   else {
-    client.on(event.name, (...args) => event.execute(client, ...args, commands))
+    logger.error("\033[40;31m" + `[ ${new Date().toLocaleString()} ]: ` + 'Failed to load event \033[41;31m' + filePath + '\033[0m');
   }
-  console.log('\033[40;32m Successfully loaded event \033[42;32m' + event.name + '\033[0m')
-
 }
 
 client.once('ready', async () => {
-  console.log(`Ready! Logged in as ${client.user.tag}`);
+  logger.info(`[ ${new Date().toLocaleString()} ]: Ready! Login Bot: ${client.user.tag}`);
   const { sleep } = require("./utils/tool.js")
   while (1) {
     client.user.setPresence({
@@ -88,7 +97,7 @@ client.once('ready', async () => {
 });
 
 process.on('unhandledRejection', (error) => {
-  console.error(error);
+  logger.error(`[ ${new Date().toLocaleString()} ]: ${error}`);
 });
 
 client.on('interactionCreate', async interaction => {

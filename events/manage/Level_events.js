@@ -24,10 +24,9 @@ module.exports = {
             let updateQuery="update level_2 set level = ? where user_id = ?" 
             db.run(updateQuery, [res.level + level_random, `${message.guildId}.${message.author.id}`]); 
              
-            res = await Find_data_level(`${message.guildId}.${message.author.id}`, "level_2")
-            if (res.level >= res.level_next) {
+            if (res.level + level_random >= res.level_next) {
                 let updateQuery="update level_2 set level = ?, level_large = ?, level_next = ? where user_id = ?" ;
-                db.run(updateQuery, [res.level - res.level_next, res.level_large + 1, res.level_next + 150, `${message.guildId}.${message.author.id}`]); 
+                db.run(updateQuery, [res.level + level_random - res.level_next, res.level_large + 1, res.level_next + 150, `${message.guildId}.${message.author.id}`]); 
 
                 const embed = new MessageEmbed()
                     .setColor(color=0xE693CB)
