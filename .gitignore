@@ -5,3 +5,4 @@ test*
 init-*
 conf.js
 info.md
+logs/*
