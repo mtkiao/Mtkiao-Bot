@@ -57,7 +57,7 @@ for (const filePath of client.ReadFiles(commandsPath)) {
   try {
     const command = require(filePath);
     client.commands.set(command.data.name, command);
-    logger.error("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load command \033[42;32m' + command.data.name + '\033[0m');
+    logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load command \033[42;32m' + command.data.name + '\033[0m');
   } catch (e) {
     logger.error("\033[40;31m" + `[ ${new Date().toLocaleString()} ]: ` + 'Failed to load command \033[41;31m' + filePath + '\033[0m' + `\n(ERROR) : ${e})`);
   }
@@ -68,11 +68,27 @@ const commands = []
 for (const filePath of client.ReadFiles(evebtsPath)) {
   const event = require(filePath);
   if (event.once) {
-    client.once(event.name, (...args) => event.execute(client, ...args, commands));
+    client.once(event.name, (...args) => {
+      try{
+        logger.info(`[ ${new Date().toLocaleString()} ]: event > ${event.name} `);
+        event.execute(client, ...args, commands)
+      } catch (error) {
+        logger.error(`[ ${new Date().toLocaleString()} ]: event > ${event.name} (ERROR): ${error}`);
+      }
+    });
+
     logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load event \033[42;32m' + event.name + '\033[0m');
   }
   else if (!event.once && event.name != undefined) {
-    client.on(event.name, (...args) => event.execute(client, ...args, commands));
+    client.on(event.name, (...args) => {
+      try{
+        logger.info(`[ ${new Date().toLocaleString()} ]: event > ${event.name}`);
+        event.execute(client, ...args, commands)
+      } catch (error) {
+        logger.error(`[ ${new Date().toLocaleString()} ]: event > ${event.name} (ERROR): ${error}`);
+      }
+    });
+    
     logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load event \033[42;32m' + event.name + '\033[0m');
   }
   else {
@@ -112,6 +128,7 @@ client.on('interactionCreate', async interaction => {
     logger.info(`[ ${new Date().toLocaleString()} ]: ${interaction.user.tag} > /${interaction.commandName}`);
   } catch (error) {
     logger.error(`[ ${new Date().toLocaleString()} ]: ${interaction.user.tag} > /${interaction.commandName} (ERROR): ${error}`);
+    await interaction.reply({ content: `發生錯誤，原因: ${error}`, ephemeral: true });
   }
 });
 

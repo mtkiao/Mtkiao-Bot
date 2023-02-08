@@ -21,17 +21,17 @@ module.exports = {
         else{
             const level_random = Math.round(Math.random() * 15)
 
-            let updateQuery="update level_2 set level = ? where user_id = ?" 
+            let updateQuery = "update level_2 set level = ? where user_id = ?" 
             db.run(updateQuery, [res.level + level_random, `${message.guildId}.${message.author.id}`]); 
              
             if (res.level + level_random >= res.level_next) {
-                let updateQuery="update level_2 set level = ?, level_large = ?, level_next = ? where user_id = ?" ;
+                let updateQuery = "update level_2 set level = ?, level_large = ?, level_next = ? where user_id = ?" ;
                 db.run(updateQuery, [res.level + level_random - res.level_next, res.level_large + 1, res.level_next + 150, `${message.guildId}.${message.author.id}`]); 
 
                 const embed = new MessageEmbed()
                     .setColor(color=0xE693CB)
                     .setTitle(`${message.author.tag}已經到**${res.level_large + 1}**等級了!`)
-                    .setDescription(`${message.author}的等級已經來到了${res.level_large + 1}，距離下次升級還要${res.level_next + 150 - (res.level - res.level_next)}個經驗值!`)
+                    .setDescription(`${message.author}的等級已經來到了${res.level_large + 1}，距離下次升級還要${res.level_next + 150 - (res.level + level_random - res.level_next)}個經驗值!`)
                     .setTimestamp()
                 message.channel.send({ embeds: [embed] })
                     .then((m) => {

@@ -39,7 +39,6 @@ module.exports = {
                 interaction.reply({ embeds: [embed] });
             }
             else{
-                console.log(member)
                 res = await Find_data_level(`${interaction.guildId}.${member.id}`, "level_2")
 
                 if (!res) {

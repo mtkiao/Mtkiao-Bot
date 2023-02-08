@@ -30,8 +30,8 @@ module.exports = {
         .addFields(
           { name: 'Cpu型號', value: `**${cpu[0].model}**`, inline: true },
           { name: 'Cpu線程數', value: `**${cpu.length}**`, inline: true },
-          { name: 'Cpu基礎頻率', value: `**${cpu[0].speed}ms**`, inline: true },
-          { name: 'Ram總數', value: `**${Math.ceil(os.totalmem() / 1000 / 1000)}MB (實際只能使用4GB)**`, inline: true },
+          { name: 'Cpu基礎頻率', value: `**${cpu[0].speed}MHz**`, inline: true },
+          { name: 'Ram總數', value: `**${Math.ceil(os.totalmem() / 1000 / 1000)}MB**`, inline: true },
           { name: 'Ram剩餘數', value: `**${Math.ceil(os.freemem() / 1000 / 1000)}MB**`, inline: true },
         )
         .setFooter({ text: `${client.user.tag} (/botinfo)`, iconURL: client.user.displayAvatarURL() })
