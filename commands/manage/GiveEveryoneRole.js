@@ -23,8 +23,6 @@ module.exports = {
 
             let successes = 0;
     
-            console.log(`Roles count: ${interaction.guild.members.cache.size}`)
-    
             for (let i = 0; i < interaction.guild.members.cache.size; i++){
                 if (interaction.guild.members.cache.map(m => m)[i].roles.cache.has(Role.id)) continue;
                 interaction.guild.members.cache.map(m => m)[i].roles.add(Role)

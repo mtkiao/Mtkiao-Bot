@@ -1,13 +1,13 @@
 {
-  "name": "discord_bot_js",
-  "version": "2.1.0",
+  "name": "mtkiao_bot",
+  "version": "2.1.12",
   "description": "A Bot",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "mtkiao129",
+  "license": "MIT",
   "dependencies": {
     "@discordjs/builders": "^1.1.0",
     "@discordjs/rest": "^1.0.1",

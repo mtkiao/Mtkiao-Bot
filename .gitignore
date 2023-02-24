@@ -1,10 +1,8 @@
 .env
 .vscode
-node_modules
-todo*
+node_modules/
 test*
 init-*
-conf.js
-info.md
-logs/
-Temp/
+info/
+logs/*
+Temp/*

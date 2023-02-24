@@ -1,12 +1,13 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { authorId } = require('../../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('list_server')
 		.setDescription('可以列出所以群組的狀況(僅限mtkiao129使用)'),
 	async execute(interaction,client) {
-        if (interaction.user.id != 608282025161654272) return
+        if (interaction.user.id != authorId) return
 
         const GuildsID = client.guilds.cache.map(guild => guild.id)
         const GuildsName = client.guilds.cache.map(guild => guild.name)
