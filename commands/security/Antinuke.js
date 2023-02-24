@@ -124,7 +124,7 @@ module.exports = {
 
       collector.on("end", async (collection) => {
         collection.forEach((click) => {
-          console.log(click.user.tag, click.customId)
+          // console.log(click.user.tag, click.customId)
         })
 
         if (collection.first()?.customId === "disable_true") {

@@ -35,20 +35,3 @@ module.exports = {
 	},
 };
 
-
-
-// if text == None or quantity == None:
-// await ctx.send(f":x:{ctx.author}你輸入的格式不正確啦~")
-// return
-// import requests as req
-// json = {'MinLen': int(quantity), 'Topic': text}
-// r = req.post('https://api.howtobullshit.me/bullshit', json=json)
-// q = r.text[48:]
-// embed = discord.Embed(title="唬爛生產器", color=0xE693CB)
-// embed.add_field(name="生產結果:", value=q, inline=False)
-// embed.set_footer(text=f"命令使用者:{ctx.author}",icon_url=str(ctx.author.display_avatar.url))
-// await ctx.send(embed=embed)
-
-
-
-

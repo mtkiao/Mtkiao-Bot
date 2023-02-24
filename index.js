@@ -5,7 +5,7 @@ const path = require('node:path')
 const fs = require('node:fs')
 const winston = require('winston')
 const { printf } = winston.format;
-const token = process.env.TOKEN
+const token = process.env.TOKEN // .env
 
 const client = new Client({
   intents: [

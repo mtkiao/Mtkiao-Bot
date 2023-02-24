@@ -30,9 +30,6 @@ module.exports = {
                 .setDescription("可以一件刪除黑名單(入群封鎖)裡的用戶id")
         ),
 	async execute(interaction,client) {
-        /* TODO
-            添加註解
-        */
         const BlackListPath = './Data/blacklist.json'
         const member = interaction.options.getString('成員id')
         const bot = interaction.member.guild.members.cache.get(client.user.id);
