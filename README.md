@@ -8,4 +8,5 @@ discord.js版本還停在13.x 之後應該會升級到14.x
 2. .env寫入Bot Token
 3. 安裝node環境(16版本以上)
 4. 在Bot文件夾裡打開終端輸入: `npm install`
-5. 運行Bot: `node inedx.js`
+5. 更新Bot指令: `node deploy-commands.js`  
+6. 運行Bot: `node inedx.js`
