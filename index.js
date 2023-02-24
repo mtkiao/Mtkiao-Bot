@@ -70,7 +70,6 @@ for (const filePath of client.ReadFiles(evebtsPath)) {
   if (event.once) {
     client.once(event.name, (...args) => {
       try{
-        logger.info(`[ ${new Date().toLocaleString()} ]: event > ${event.name} `);
         event.execute(client, ...args, commands)
       } catch (error) {
         logger.error(`[ ${new Date().toLocaleString()} ]: event > ${event.name} (ERROR): ${error}`);
@@ -82,7 +81,6 @@ for (const filePath of client.ReadFiles(evebtsPath)) {
   else if (!event.once && event.name != undefined) {
     client.on(event.name, (...args) => {
       try{
-        logger.info(`[ ${new Date().toLocaleString()} ]: event > ${event.name}`);
         event.execute(client, ...args, commands)
       } catch (error) {
         logger.error(`[ ${new Date().toLocaleString()} ]: event > ${event.name} (ERROR): ${error}`);
