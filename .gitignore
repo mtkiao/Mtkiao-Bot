@@ -6,5 +6,5 @@ test*
 init-*
 conf.js
 info.md
-logs/*
-Temp/*
+logs/
+Temp/
