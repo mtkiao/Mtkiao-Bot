@@ -1,7 +1,7 @@
 # Mtkiao-Bot
-一個很普通的Discord Bot
-Code 寫得很爛w 勿噴
-discord.js版本還停在13.x 之後應該會升級到14.x
+一個很普通的Discord Bot  
+Code 寫得很爛w 勿噴  
+discord.js版本還停在13.x 之後應該會升級到14.x  
 
 ## Setup
 1. 創建.env文件
