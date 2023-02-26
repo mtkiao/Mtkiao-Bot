@@ -10,3 +10,7 @@ discord.js版本還停在13.x 之後應該會升級到14.x
 4. 在Bot文件夾裡打開終端輸入: `npm install`
 5. 更新Bot指令: `node deploy-commands.js`  
 6. 運行Bot: `node inedx.js`
+### Node Version
+<Node 16 :question:
+Node 16 :white_check_mark:
+<Node 16 :question:
