@@ -92,7 +92,5 @@ module.exports = {
                 ]
             })
         })
-
-
 	},
 };

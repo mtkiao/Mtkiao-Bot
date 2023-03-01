@@ -1,9 +1,9 @@
 {
     "clientId": "1048774640585158736",
-    "guildId": "1005037477217718352",
     "bot": {
         "name": "Mtkiao bot",
-        "version": "2.1.12"
+        "version": "2.1.13",
+        "streamUrl": "https://www.youtube.com/watch?v=yPYZpwSpKmA"
     },
-    "authorId": 608282025161654272
+    "authorId": "608282025161654272"
 }

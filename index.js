@@ -4,6 +4,8 @@ const Discord = require("discord.js")
 const path = require('node:path')
 const fs = require('node:fs')
 const winston = require('winston')
+const config = require('./Config/config.json')
+const { sleep } = require("./utils/tool.js")
 const { printf } = winston.format;
 const token = process.env.TOKEN // .env
 
@@ -57,9 +59,9 @@ for (const filePath of client.ReadFiles(commandsPath)) {
   try {
     const command = require(filePath);
     client.commands.set(command.data.name, command);
-    logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load command \033[42;32m' + command.data.name + '\033[0m');
+    logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully loaded command \033[44;32m' + command.data.name + '\033[0m');
   } catch (e) {
-    logger.error("\033[40;31m" + `[ ${new Date().toLocaleString()} ]: ` + 'Failed to load command \033[41;31m' + filePath + '\033[0m' + `\n(ERROR) : ${e})`);
+    logger.error("\033[40;31m" + `[ ${new Date().toLocaleString()} ]: ` + 'Failed loaded command \033[41;31m' + filePath + '\033[0m' + `\n(ERROR) : ${e})`);
   }
 }
 
@@ -76,7 +78,7 @@ for (const filePath of client.ReadFiles(evebtsPath)) {
       }
     });
 
-    logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load event \033[42;32m' + event.name + '\033[0m');
+    logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load event \033[44;32m' + event.name + '\033[0m');
   }
   else if (!event.once && event.name != undefined) {
     client.on(event.name, (...args) => {
@@ -87,7 +89,7 @@ for (const filePath of client.ReadFiles(evebtsPath)) {
       }
     });
     
-    logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load event \033[42;32m' + event.name + '\033[0m');
+    logger.info("\033[40;32m" + `[ ${new Date().toLocaleString()} ]: ` + 'Successfully load event \033[44;32m' + event.name + '\033[0m');
   }
   else {
     logger.error("\033[40;31m" + `[ ${new Date().toLocaleString()} ]: ` + 'Failed to load event \033[41;31m' + filePath + '\033[0m');
@@ -96,14 +98,13 @@ for (const filePath of client.ReadFiles(evebtsPath)) {
 
 client.once('ready', async () => {
   logger.info(`[ ${new Date().toLocaleString()} ]: Ready! Login Bot: ${client.user.tag}`);
-  const { sleep } = require("./utils/tool.js")
   while (1) {
     client.user.setPresence({
       status: "idle",
       activities: [{
         name: `${client.guilds.cache.size}個伺服器 | /help`,
         type: 1,
-        url: 'https://www.youtube.com/watch?v=yPYZpwSpKmA',
+        url: `${config.bot.streamUrl}`,
       }]
     });
     await sleep(60000)

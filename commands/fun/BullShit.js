@@ -16,7 +16,6 @@ module.exports = {
     if (bullshitNumber == NaN) return interaction.editReply({ content: `:x:請輸入數字`, ephemeral: true });
     if (bullshitNumber <= 0 || bullshitNumber > 1000) return interaction.editReply({ content: `:x:請輸入大於0的數字且小於1000的數字`, ephemeral: true });
 
-    console.log(bullshitNumber, bullshitText);
     axios.post('https://api.howtobullshit.me/bullshit', {
       MinLen: bullshitNumber,
       Topic: bullshitText
@@ -24,13 +23,14 @@ module.exports = {
       let req_text = String(res.data.substr(48).replace("<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp",""));
       const embed = new MessageEmbed()
           .setColor(color=0xE693CB)
-          .setTitle(`唬爛產稱器 - ${bullshitText}`)
+          .setTitle(`:rofl:唬爛產稱器 - ${bullshitText}`)
           .setDescription(req_text.replace("<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",""))
           .setTimestamp()
           .setFooter({ text: `命令使用者:${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
       interaction.editReply({ embeds: [embed] });
     }).catch(error => {
-      interaction.editReply({content:`發生錯誤 原因:${error}`, ephemeral:true})
+      if (String(error.response.status).substr(0, 1) === "5") return interaction.editReply({content:`:x:伺服器api目前屬於異常狀態，請稍後重試`, ephemeral:true})
+      interaction.editReply({content:`:x:發生錯誤 原因: ${error}`, ephemeral:true})
     })
 	},
 };

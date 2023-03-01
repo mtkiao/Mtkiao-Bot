@@ -5,7 +5,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
                 .setName('leave_server')
                 .setDescription('可以讓機器人離開指定的群組(僅限mtkiao129使用)')
-        .addStringOption(option => option.setName('伺服器id').setDescription('請寫出伺服器的id').setRequired(true)),
+                .addStringOption(option => option.setName('伺服器id').setDescription('請寫出伺服器的id').setRequired(true)),
 	async execute(interaction,client) {
                 if (interaction.user.id != authorId) return
                 
