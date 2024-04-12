@@ -11,7 +11,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.1.0",
     "@discordjs/rest": "^1.0.1",
-    "axios": "^0.27.2",
+    "axios": "^0.28.0",
     "canvacord": "^5.4.5",
     "chalk": "^5.1.2",
     "crypto-js": "^4.1.1",
